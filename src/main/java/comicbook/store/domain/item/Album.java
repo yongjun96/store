@@ -1,5 +1,6 @@
-package comicbook.store.domain;
+package comicbook.store.domain.item;
 
+import comicbook.store.domain.item.Item;
 import jakarta.persistence.Entity;
 
 @Entity

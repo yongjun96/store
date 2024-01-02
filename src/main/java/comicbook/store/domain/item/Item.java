@@ -1,4 +1,4 @@
-package comicbook.store.domain;
+package comicbook.store.domain.item;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,6 +21,8 @@ public class Item {
     private String name;
 
     private int price;
+
+    private int StockQuantity;
 
 
 }
