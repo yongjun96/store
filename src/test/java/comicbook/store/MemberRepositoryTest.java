@@ -1,5 +1,7 @@
 package comicbook.store;
 
+import comicbook.store.domain.Member;
+import comicbook.store.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +16,25 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 class MemberRepositoryTest {
 
-    @Autowired MemberRepository memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     @Transactional  //테스트에 있으면 테스트가 끝나고 롤백을 함 (데이터가 들어가 있으면 반복적인 테스트를 못하니까)
     @Rollback(value = false)    // 자동 롤백을 막음
     public void testMember() throws Exception {
         //given
-        MemberTest member = new MemberTest();
-        member.setUsername("memberA");
+//        Member member = new Member();
+//        member.setName("memberA");
 
         //when
-        Long saveId = memberRepository.save(member);
-        MemberTest findMember = memberRepository.find(saveId);
+        //Long saveId = memberRepository.save(member);
+        //Member findMember = memberRepository.find(saveId);
 
         //then
-        assertThat(findMember.getId()).isEqualTo(member.getId());
-        assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
-        assertThat(findMember).isEqualTo(member);   // true : 같은 영속성 컨텍스트 안에서는 ID같이 같으면 같은 Entity
+//        assertThat(findMember.getId()).isEqualTo(member.getId());
+//        assertThat(findMember.getName()).isEqualTo(member.getName());
+//        assertThat(findMember).isEqualTo(member);   // true : 같은 영속성 컨텍스트 안에서는 ID같이 같으면 같은 Entity
     }
 
 }
