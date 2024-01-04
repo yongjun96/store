@@ -2,6 +2,7 @@ package comicbook.store.domain;
 
 import comicbook.store.domain.item.Item;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)  // 생성자를 protected로 만들어줌
 public class OrderItem {
 
     @Id
