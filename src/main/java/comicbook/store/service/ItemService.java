@@ -1,5 +1,6 @@
 package comicbook.store.service;
 
+import comicbook.store.domain.item.Book;
 import comicbook.store.domain.item.Item;
 import comicbook.store.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,12 @@ public class ItemService {
     public Long saveItem(Item item){
         itemRepository.save(item);
         return item.getId();
+    }
+
+    @Transactional
+    public void updateItem(Long itemId, Book bookParam){
+        Item findItem = itemRepository.findItem(itemId);
+
     }
 
     public List<Item> findItems(){

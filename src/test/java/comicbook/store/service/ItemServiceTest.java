@@ -34,4 +34,15 @@ class ItemServiceTest {
 
         assertEquals(itemId, itemService.saveItem(book));
     }
+
+
+    @Test
+    void 업데이트() throws Exception{
+
+        Book book = em.find(Book.class, 1L);
+
+        //TX commit
+        //변경감지 == dirty checking
+        book.setName("이름 바꾸기"); //더티채킹 (변경감지) JPA가 알아서 업데이트 함
+    }
 }
