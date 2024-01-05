@@ -8,6 +8,7 @@ import comicbook.store.domain.item.Item;
 import comicbook.store.repository.ItemRepository;
 import comicbook.store.repository.MemberRepository;
 import comicbook.store.repository.OrderRepositoty;
+import comicbook.store.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,7 +68,9 @@ public class OrderService {
     /**
      * 주문 검색
      */
-//    public List<Order> findOrders(){
-//
-//    }
+    public List<Order> findOrders(OrderSearch orderSearch){
+
+        return orderRepositoty.findAllByString(orderSearch);
+
+    }
 }

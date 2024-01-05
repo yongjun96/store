@@ -4,6 +4,7 @@ import comicbook.store.domain.item.Book;
 import comicbook.store.domain.item.Item;
 import comicbook.store.repository.ItemRepository;
 import comicbook.store.service.ItemService;
+import comicbook.store.service.UdateItemDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -69,17 +70,19 @@ public class ItemController {
     }
 
     @PostMapping("items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form) {
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") UdateItemDto form) {
 
-        Book book = new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setIsbn(form.getIsbn());
-        book.setAuthor(form.getAuthor());
+//        Book book = new Book();
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setIsbn(form.getIsbn());
+//        book.setAuthor(form.getAuthor());
+//        itemService.saveItem(book);
 
-        itemService.saveItem(book);
+        itemService.updateItem(itemId, form);
+
         return "redirect:/items";
 
     }
