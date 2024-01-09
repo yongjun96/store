@@ -5,6 +5,8 @@ import comicbook.store.domain.Order;
 import comicbook.store.domain.OrderStatus;
 import comicbook.store.repository.OrderRepositoty;
 import comicbook.store.repository.OrderSearch;
+import comicbook.store.repository.order.simplequery.OrderSimpleQueryDto;
+import comicbook.store.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class OrderSimpleApiController {
 
     private final OrderRepositoty orderRepositoty;
+    private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
     @GetMapping("api/v1/simple-orders")
     public List<Order> orderV1(){
@@ -34,13 +37,38 @@ public class OrderSimpleApiController {
 
     @GetMapping("api/v2/simple-orders")
     public List<SimpleOrderDto> ordersV2(){
+        // 회원 N + 배송 N + 1
         List<Order> orders = orderRepositoty.findAllByString(new OrderSearch());
 
+        //다건 검색
          List<SimpleOrderDto> result = orders.stream()
                 .map(o -> new SimpleOrderDto(o))
                 .collect(Collectors.toList());
 
           return result;
+    }
+
+
+    @GetMapping("api/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3(){
+        // 회원 N + 배송 N + 1
+        List<Order> orders = orderRepositoty.findAllWithMemberDelivery();
+
+        //다건 검색
+        List<SimpleOrderDto> result = orders.stream()
+                .map(o -> new SimpleOrderDto(o))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+
+    //사실상 성능 향상은 미비하고 재사용성이 떨어짐.
+    @GetMapping("api/v4/simple-orders")
+    public List<OrderSimpleQueryDto> ordersV4(){
+        // 회원 N + 배송 N + 1
+       return orderSimpleQueryRepository.findOrderDtos();
+
     }
 
     @Data

@@ -1,11 +1,10 @@
 package comicbook.store.repository;
 
 import comicbook.store.domain.Order;
-import comicbook.store.domain.OrderStatus;
+import comicbook.store.repository.order.simplequery.OrderSimpleQueryDto;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -73,5 +72,12 @@ public class OrderRepositoty {
         }
 
         return orderList;
+    }
+
+    public List<Order> findAllWithMemberDelivery() {
+
+        return em.createQuery("select o from Order o join fetch o.member m join fetch o.delivery d", Order.class)
+                .getResultList();
+
     }
 }
