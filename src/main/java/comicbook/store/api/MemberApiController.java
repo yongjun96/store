@@ -11,9 +11,11 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.apache.logging.log4j.util.PropertySource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,33 +47,37 @@ public class MemberApiController {
         List<Item> findItems = itemService.findItems();
 
         List<MemberDto> collect = findMembers.stream()
+                .sorted(Comparator.comparing(Member::getName))
                 .map(m -> new MemberDto(m.getId(), m.getName()))
                 .collect(Collectors.toList());
 
         List<ItemDto> itmeCollect = findItems.stream()
-                .map(i -> new ItemDto(i.getId(), i.getName()))
+                .map( i -> new ItemDto(i.getId(), i.getName(), i.getPrice()))
                 .collect(Collectors.toList());
 
 
-        return new Result(collect.size(), collect);
+        return new Result(collect.size(), itmeCollect.size(), collect, itmeCollect);
     }
+
 
     @Data
     @AllArgsConstructor
     static class Result<T, I>{
 
-        private int size;
+        private int memberSize;
 
-        private T data;
+        private int itemSize;
 
-       // private I itemData;
+        private T member;
+
+        private I item;
     }
+
 
     @Data
     @AllArgsConstructor
     static class MemberDto{
         private Long id;
-
         private String name;
     }
 
@@ -79,13 +85,9 @@ public class MemberApiController {
     @AllArgsConstructor
     static class ItemDto{
         private Long id;
-
         private String name;
+        private int price;
     }
-
-
-
-    @GetMapping()
 
 
     @PostMapping("/api/v1/members")

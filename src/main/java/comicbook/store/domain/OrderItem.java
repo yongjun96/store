@@ -1,5 +1,6 @@
 package comicbook.store.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import comicbook.store.domain.item.Item;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
