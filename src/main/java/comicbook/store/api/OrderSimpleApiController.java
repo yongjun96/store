@@ -3,7 +3,7 @@ package comicbook.store.api;
 import comicbook.store.domain.Address;
 import comicbook.store.domain.Order;
 import comicbook.store.domain.OrderStatus;
-import comicbook.store.repository.OrderRepositoty;
+import comicbook.store.repository.OrderRepository;
 import comicbook.store.repository.OrderSearch;
 import comicbook.store.repository.order.simplequery.OrderSimpleQueryDto;
 import comicbook.store.repository.order.simplequery.OrderSimpleQueryRepository;
@@ -26,19 +26,19 @@ import java.util.stream.Collectors;
 @RestController
 public class OrderSimpleApiController {
 
-    private final OrderRepositoty orderRepositoty;
+    private final OrderRepository orderRepository;
     private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
     @GetMapping("api/v1/simple-orders")
     public List<Order> orderV1(){
-        List<Order> all = orderRepositoty.findAllByString(new OrderSearch());
+        List<Order> all = orderRepository.findAllByString(new OrderSearch());
         return all;
     }
 
     @GetMapping("api/v2/simple-orders")
     public List<SimpleOrderDto> ordersV2(){
         // 회원 N + 배송 N + 1
-        List<Order> orders = orderRepositoty.findAllByString(new OrderSearch());
+        List<Order> orders = orderRepository.findAllByString(new OrderSearch());
 
         //다건 검색
          List<SimpleOrderDto> result = orders.stream()
@@ -52,7 +52,7 @@ public class OrderSimpleApiController {
     @GetMapping("api/v3/simple-orders")
     public List<SimpleOrderDto> ordersV3(){
         // 회원 N + 배송 N + 1
-        List<Order> orders = orderRepositoty.findAllWithMemberDelivery();
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
 
         //다건 검색
         List<SimpleOrderDto> result = orders.stream()

@@ -12,6 +12,7 @@ spring:
       hibernate:
 #     show_sql: true --> 시스템아웃에서 찍음
        format_sql: true
+       default_batch_fetch_size: 100  # 옵션을 키는게 좋음. 최대 사이즈 만큼 하나 하나 조회하지 않고 in()쿼리로 가져옴 (페이징 시, 유용)
 
 logging:
   level:

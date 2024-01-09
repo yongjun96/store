@@ -29,7 +29,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'   //스프링부트가 지원하지 않는 라이브러리는 버전정보입력
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5' //하이버네이트가 변환 시킨 지연로딩의 프록시 객체를
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta' //하이버네이트가 변환 시킨 지연로딩의 프록시 객체를
 
     testImplementation 'junit:junit:4.13.1'
     compileOnly 'org.projectlombok:lombok'

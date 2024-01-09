@@ -23,6 +23,7 @@ public class Delivery {
     @Embedded
     private Address address;
 
+    @JsonIgnore
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
 

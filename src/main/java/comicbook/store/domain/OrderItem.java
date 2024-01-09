@@ -23,6 +23,7 @@ public class OrderItem {
 
     private int count;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "ORDER_ID")
     private Order order;

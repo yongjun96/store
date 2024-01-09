@@ -7,7 +7,7 @@ import comicbook.store.domain.OrderItem;
 import comicbook.store.domain.item.Item;
 import comicbook.store.repository.ItemRepository;
 import comicbook.store.repository.MemberRepository;
-import comicbook.store.repository.OrderRepositoty;
+import comicbook.store.repository.OrderRepository;
 import comicbook.store.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final OrderRepositoty orderRepositoty;
+    private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
 
@@ -45,7 +45,7 @@ public class OrderService {
         Order order = Order.createOrder(member, delivery, orderItem);
 
         //주문 저장
-        orderRepositoty.save(order);
+        orderRepository.save(order);
 
         return order.getId();
     }
@@ -58,7 +58,7 @@ public class OrderService {
     public void cancelOrder(Long orderId){
 
         //주문 엔티티 조회
-        Order order = orderRepositoty.findOne(orderId);
+        Order order = orderRepository.findOne(orderId);
 
         //주문 취소
         order.cancel();
@@ -70,7 +70,7 @@ public class OrderService {
      */
     public List<Order> findOrders(OrderSearch orderSearch){
 
-        return orderRepositoty.findAllByString(orderSearch);
+        return orderRepository.findAllByString(orderSearch);
 
     }
 }
