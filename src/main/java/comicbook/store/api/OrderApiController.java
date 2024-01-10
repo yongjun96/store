@@ -6,6 +6,10 @@ import comicbook.store.domain.OrderItem;
 import comicbook.store.domain.OrderStatus;
 import comicbook.store.repository.OrderRepository;
 import comicbook.store.repository.OrderSearch;
+import comicbook.store.repository.order.query.OrderFlatDto;
+import comicbook.store.repository.order.query.OrderItemQueryDto;
+import comicbook.store.repository.order.query.OrderQueryDto;
+import comicbook.store.repository.order.query.OrderQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
 
     @GetMapping("api/v2/orders")
     public List<OrderDto> ordersV2(){
@@ -56,6 +61,34 @@ public class OrderApiController {
 
         return result;
     }
+
+
+    @GetMapping("api/v4/orders")
+    public List<OrderQueryDto> ordersV4(){
+        return orderQueryRepository.findOrderQueryDtos();
+    }
+
+
+    @GetMapping("api/v5/orders")
+    public List<OrderQueryDto> ordersV5(){
+        return orderQueryRepository.findAllByDto();
+    }
+
+
+    @GetMapping("api/v6/orders")
+    public List<OrderQueryDto> ordersV6(){
+        List<OrderFlatDto> flats = orderQueryRepository.findAllByDtoFlat();
+        List<OrderQueryDto> orderResult;
+
+        return flats.stream()
+                .collect(Collectors.groupingBy(o -> new OrderQueryDto(o.getOrderId(), o.getName(), o.getOrderDate(), o.getOrderStatus(), o.getAddress()),
+                        Collectors.mapping(o -> new OrderItemQueryDto(o.getOrderId(), o.getItemName(), o.getOrderPrice(), o.getCount()),
+                                Collectors.toList())
+                )).entrySet().stream()
+                .map(e -> new OrderQueryDto(e.getKey().getOrderId(), e.getKey().getName(), e.getKey().getOrderDate(), e.getKey().getOrderStatus(), e.getKey().getAddress(), e.getValue()))
+                .collect(Collectors.toList());
+    }
+
 
     @Data
     static class OrderDto{
